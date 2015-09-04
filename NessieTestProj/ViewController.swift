@@ -14,7 +14,7 @@ class ViewController: UIViewController {
         
         
         //Running multiple tests in one pass can cause async issues
-        //var test1 = AccountTests()
+        var test1 = AccountTests()
         //var test2 = ATMTests()
         //var test3 = BillTests()
         //var test4 = BranchTests()
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         //var test6 = DepositTests()
         //var test7 = PurchaseTests()
         //var test8 = TransferTests()
-        var test9 = WithdrawalTests()
+        //var test9 = WithdrawalTests()
         //var test7 = MerchantTests()
         //var test7 = TransactionTests()
         //var test9 = EnterpriseTests()
