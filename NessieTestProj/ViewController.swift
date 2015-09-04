@@ -21,10 +21,10 @@ class ViewController: UIViewController {
         //var test5 = CustomerTests()
         //var test6 = DepositTests()
         //var test7 = PurchaseTests()
-        //var test8 = TransferTests()
+        var test8 = TransferTests()
         //var test9 = WithdrawalTests()
-        //var test7 = MerchantTests()
-        //var test7 = TransactionTests()
-        var test9 = EnterpriseTests()
+        //var test10 = MerchantTests()
+        //var test11 = TransactionTests()
+        //var test12 = EnterpriseTests()
     }
 }

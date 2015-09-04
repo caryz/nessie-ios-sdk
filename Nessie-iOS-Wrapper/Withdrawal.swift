@@ -155,8 +155,8 @@ public class WithdrawalRequest {
 
 
 public struct WithdrawalResult {
-    private var dataItem:Transaction?
-    private var dataArray:Array<Transaction>?
+    private var dataItem:Withdrawal?
+    private var dataArray:Array<Withdrawal>?
     internal init(data:NSData) {
         var parseError: NSError?
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Array<Dictionary<String,AnyObject>> {
@@ -164,7 +164,7 @@ public struct WithdrawalResult {
             dataArray = []
             dataItem = nil
             for withdrawal in parsedObject {
-                dataArray?.append(Transaction(data: withdrawal))
+                dataArray?.append(Withdrawal(data: withdrawal))
             }
         }
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Dictionary<String,AnyObject> {
@@ -188,13 +188,13 @@ public struct WithdrawalResult {
                     dataArray = []
                     dataItem = nil
                     for transfer in results {
-                        dataArray?.append(Transaction(data: transfer as! Dictionary<String, AnyObject>))
+                        dataArray?.append(Withdrawal(data: transfer as! Dictionary<String, AnyObject>))
                     }
                     return
                 }
             }
             
-            dataItem = Transaction(data: parsedObject)
+            dataItem = Withdrawal(data: parsedObject)
         }
         if (dataItem == nil && dataArray == nil) {
             var datastring = NSString(data: data, encoding: NSUTF8StringEncoding)
@@ -206,14 +206,14 @@ public struct WithdrawalResult {
         }
     }
     
-    public func getWithdrawal() -> Transaction? {
+    public func getWithdrawal() -> Withdrawal? {
         if (dataItem == nil) {
             NSLog("No single data item found. If you were intending to get multiple items, try getAllWithdrawals()");
         }
         return dataItem
     }
     
-    public func getAllWithdrawals() -> Array<Transaction>? {
+    public func getAllWithdrawals() -> Array<Withdrawal>? {
         if (dataArray == nil) {
             NSLog("No array of data items found. If you were intending to get one single item, try getWithdrawal()");
         }
@@ -222,14 +222,14 @@ public struct WithdrawalResult {
 }
 
 public class Withdrawal {
-    public let status:String?
+    public let status:String!
     public let medium:TransactionMedium
-    public let payerId:String?
-    public let amount:Int
-    public let type:String
+    public let payerId:String!
+    public let amount:Int!
+    public let type:String!
     public var transactionDate:NSDate? = nil
-    public let description:String
-    public let withdrawalId:String
+    public let description:String!
+    public let withdrawalId:String!
     
     internal init(data:Dictionary<String,AnyObject>) {
         self.status = data["status"] as? String

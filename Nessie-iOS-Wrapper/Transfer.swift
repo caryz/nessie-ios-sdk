@@ -168,8 +168,8 @@ public class TransferRequest {
 
 
 public struct TransferResult {
-    private var dataItem:Transaction?
-    private var dataArray:Array<Transaction>?
+    private var dataItem:Transfer?
+    private var dataArray:Array<Transfer>?
     internal init(data:NSData) {
         var parseError: NSError?
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Array<Dictionary<String,AnyObject>> {
@@ -177,7 +177,7 @@ public struct TransferResult {
             dataArray = []
             dataItem = nil
             for transfer in parsedObject {
-                dataArray?.append(Transaction(data: transfer))
+                dataArray?.append(Transfer(data: transfer))
             }
         }
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Dictionary<String,AnyObject> {
@@ -187,7 +187,7 @@ public struct TransferResult {
                 dataArray = []
                 dataItem = nil
                 for transfer in results {
-                    dataArray?.append(Transaction(data: transfer as! Dictionary<String, AnyObject>))
+                    dataArray?.append(Transfer(data: transfer as! Dictionary<String, AnyObject>))
                 }
                 return
             }
@@ -207,7 +207,7 @@ public struct TransferResult {
                 
             }
             
-            dataItem = Transaction(data: parsedObject)
+            dataItem = Transfer(data: parsedObject)
         }
         
         if (dataItem == nil && dataArray == nil) {
@@ -220,14 +220,14 @@ public struct TransferResult {
         }
     }
     
-    public func getTransfer() -> Transaction? {
+    public func getTransfer() -> Transfer? {
         if (dataItem == nil) {
             NSLog("No single data item found. If you were intending to get multiple items, try getAllTransfers()");
         }
         return dataItem
     }
     
-    public func getAllTransfers() -> Array<Transaction>? {
+    public func getAllTransfers() -> Array<Transfer>? {
         if (dataArray == nil) {
             NSLog("No array of data items found. If you were intending to get one single item, try getTransfer()");
         }
@@ -236,15 +236,15 @@ public struct TransferResult {
 }
 
 public class Transfer {
-    public let status:String?
-    public let medium:TransactionMedium
-    public let payeeId:String?
-    public let payerId:String?
-    public let amount:Int
-    public let type:String
-    public var transactionDate:NSDate? = nil
-    public let description:String
-    public let transferId:String
+    public let status:String!
+    public let medium:TransactionMedium!
+    public let payeeId:String!
+    public let payerId:String!
+    public let amount:Int!
+    public let type:String!
+    public var transactionDate:NSDate!
+    public let description:String!
+    public let transferId:String!
     
     internal init(data:Dictionary<String,AnyObject>) {
         self.status = data["status"] as? String

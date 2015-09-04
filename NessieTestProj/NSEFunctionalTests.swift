@@ -588,10 +588,10 @@ class TransferTests {
         })
     }
     
-    func testGetOneTransfer(transfer:Transaction) {
+    func testGetOneTransfer(transfer:Transfer) {
         TransferRequest(block: {(builder:TransferRequestBuilder) in
             builder.requestType = HTTPType.GET
-            builder.transferId = transfer.transactionId
+            builder.transferId = transfer.transferId
         })?.send(completion: {(result:TransferResult) in
             var transferResult = result.getTransfer()
             print(transferResult)
@@ -616,7 +616,7 @@ class TransferTests {
                 
                 if transfers!.count > 0 {
                     let transferToGet = transfers![transfers!.count-1]
-                    var transferToDelete:Transaction? = nil;
+                    var transferToDelete:Transfer? = nil;
                     for transfer in transfers! {
                         if transfer.status == "pending" {
                             transferToDelete = transfer
@@ -633,13 +633,13 @@ class TransferTests {
         })
     }
     
-    func testPutTransfer(transfer:Transaction?) {
+    func testPutTransfer(transfer:Transfer?) {
         
         if (transfer == nil) {
             return
         }
         TransferRequest(block: {(builder:TransferRequestBuilder) in
-            builder.transferId = transfer!.transactionId
+            builder.transferId = transfer!.transferId
             println(transfer!.status)
             builder.requestType = HTTPType.PUT
             builder.amount = 4300
@@ -651,9 +651,9 @@ class TransferTests {
         })
     }
     
-    func testDeleteTransfer(transfer:Transaction?) {
+    func testDeleteTransfer(transfer:Transfer?) {
         TransferRequest(block: {(builder:TransferRequestBuilder) in
-            builder.transferId = transfer!.transactionId
+            builder.transferId = transfer!.transferId
             println(transfer!.status)
             
             builder.requestType = HTTPType.DELETE
@@ -691,10 +691,10 @@ class WithdrawalTests {
         })
     }
     
-    func testGetOneWithdrawal(withdrawal:Transaction) {
+    func testGetOneWithdrawal(withdrawal:Withdrawal) {
         WithdrawalRequest(block: {(builder:WithdrawalRequestBuilder) in
             builder.requestType = HTTPType.GET
-            builder.withdrawalId = withdrawal.transactionId
+            builder.withdrawalId = withdrawal.withdrawalId
         })?.send(completion: {(result:WithdrawalResult) in
             var withdrawalResult = result.getWithdrawal()
             print(withdrawalResult)
@@ -718,7 +718,7 @@ class WithdrawalTests {
                 
                 if withdrawals!.count > 0 {
                     let withdrawalToGet = withdrawals![withdrawals!.count-1]
-                    var withdrawalToDelete:Transaction? = nil;
+                    var withdrawalToDelete:Withdrawal? = nil;
                     for withdrawal in withdrawals! {
                         if withdrawal.status == "pending" {
                             withdrawalToDelete = withdrawal
@@ -727,7 +727,7 @@ class WithdrawalTests {
                     }
                     
                     //self.testGetOneWithdrawal(withdrawalToGet)
-                    //self.testPutWithdrawal(withdrawalToDelete)
+                    self.testPutWithdrawal(withdrawalToDelete)
                     
                 }
             })
@@ -735,13 +735,13 @@ class WithdrawalTests {
         })
     }
     
-    func testPutWithdrawal(withdrawal:Transaction?) {
+    func testPutWithdrawal(withdrawal:Withdrawal?) {
         
         if (withdrawal == nil) {
             return
         }
         WithdrawalRequest(block: {(builder:WithdrawalRequestBuilder) in
-            builder.withdrawalId = withdrawal!.transactionId
+            builder.withdrawalId = withdrawal!.withdrawalId
             println(withdrawal!.status)
             builder.requestType = HTTPType.PUT
             builder.amount = 4300
@@ -752,9 +752,9 @@ class WithdrawalTests {
         })
     }
     
-    func testDeleteWithdrawal(withdrawal:Transaction?) {
+    func testDeleteWithdrawal(withdrawal:Withdrawal?) {
         WithdrawalRequest(block: {(builder:WithdrawalRequestBuilder) in
-            builder.withdrawalId = withdrawal!.transactionId
+            builder.withdrawalId = withdrawal!.withdrawalId
             println(withdrawal!.status)
             
             builder.requestType = HTTPType.DELETE
@@ -985,7 +985,7 @@ class EnterpriseTests {
         EnterpriseTransferRequest()?.send({(result:TransferResult) in
             var transfers = result.getAllTransfers()
             print("\(transfers)\n")
-            EnterpriseTransferRequest(transactionId: transfers![0].transactionId)?.send({(result:TransferResult) in
+            EnterpriseTransferRequest(transactionId: transfers![0].transferId)?.send({(result:TransferResult) in
                 var transfer = result.getTransfer()
                 print("\(transfer)\n")
             })
@@ -1001,7 +1001,7 @@ class EnterpriseTests {
         EnterpriseWithdrawalRequest()?.send({(result:WithdrawalResult) in
             var withdrawals = result.getAllWithdrawals()
             print("\(withdrawals)\n")
-            EnterpriseWithdrawalRequest(transactionId: withdrawals![0].transactionId)?.send({(result:WithdrawalResult) in
+            EnterpriseWithdrawalRequest(transactionId: withdrawals![0].withdrawalId)?.send({(result:WithdrawalResult) in
                 var withdrawal = result.getWithdrawal()
                 print("\(withdrawal)\n")
             })
