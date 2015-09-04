@@ -157,6 +157,15 @@ public struct AccountResult {
                 }
             }
             
+            if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                dataArray = []
+                dataItem = nil
+                for transfer in results {
+                    dataArray?.append(Account(data: transfer as! Dictionary<String, AnyObject>))
+                }
+                return
+            }
+            
             dataItem = Account(data: parsedObject)
         }
         if (dataArray == nil) && dataItem == nil {

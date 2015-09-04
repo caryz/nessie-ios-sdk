@@ -191,6 +191,16 @@ public struct BillResult {
                     return
                 }
             }
+            
+            if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                dataArray = []
+                dataItem = nil
+                for transfer in results {
+                    dataArray?.append(Bill(data: transfer as! Dictionary<String, AnyObject>))
+                }
+                return
+            }
+
             dataItem = Bill(data: parsedObject)
         }
         if (dataItem == nil && dataArray == nil) {

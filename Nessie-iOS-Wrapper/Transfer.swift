@@ -170,7 +170,7 @@ public class TransferRequest {
 public struct TransferResult {
     private var dataItem:Transaction?
     private var dataArray:Array<Transaction>?
-    private init(data:NSData) {
+    internal init(data:NSData) {
         var parseError: NSError?
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Array<Dictionary<String,AnyObject>> {
             
@@ -183,6 +183,15 @@ public struct TransferResult {
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Dictionary<String,AnyObject> {
             dataArray = nil
             
+            if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                dataArray = []
+                dataItem = nil
+                for transfer in results {
+                    dataArray?.append(Transaction(data: transfer as! Dictionary<String, AnyObject>))
+                }
+                return
+            }
+            
             //If there is an error message, the json will parse to a dictionary, not an array
             if let message:AnyObject = parsedObject["message"] {
                 NSLog(message.description!)
@@ -192,6 +201,10 @@ public struct TransferResult {
                 } else {
                     return
                 }
+            }
+            
+            if let message:AnyObject = parsedObject["message"] {
+                
             }
             
             dataItem = Transaction(data: parsedObject)
@@ -219,5 +232,36 @@ public struct TransferResult {
             NSLog("No array of data items found. If you were intending to get one single item, try getTransfer()");
         }
         return dataArray
+    }
+}
+
+public class Transfer {
+    public let status:String?
+    public let medium:TransactionMedium
+    public let payeeId:String?
+    public let payerId:String?
+    public let amount:Int
+    public let type:String
+    public var transactionDate:NSDate? = nil
+    public let description:String
+    public let transferId:String
+    
+    internal init(data:Dictionary<String,AnyObject>) {
+        self.status = data["status"] as? String
+        self.medium = TransactionMedium(rawValue:data["medium"] as! String)!
+        self.payeeId = data["payee_id"] as? String
+        self.payerId = data["payer_id"] as? String
+        self.amount = data["amount"] as! Int
+        self.type = data["type"] as! String
+        let transactionDateString = data["transaction_date"] as? String
+        if let str = transactionDateString {
+            if let date = dateFormatter.dateFromString(str) {
+                self.transactionDate = date }
+            else {
+                self.transactionDate = NSDate()
+            }
+        }
+        self.description = data["description"] as! String
+        self.transferId = data["_id"] as! String
     }
 }

@@ -16,11 +16,35 @@ public class Address:NSObject {
     public let zipCode:String
     
     internal init(data:Dictionary<String,AnyObject>) {
-        streetName = data["street_name"] as! String
-        streetNumber = data["street_number"]as! String
-        city = data["city"] as! String
-        state = data["state"] as! String
-        zipCode = data["zip"] as! String
+        if let street = data["street_name"] as? String{
+            streetName = street
+        } else {
+            streetName = ""
+        }
+
+        if let streetNum = data["street_number"] as? String{
+            streetNumber = streetNum
+        } else {
+            streetNumber = ""
+        }
+
+        if let cityName = data["city"] as? String{
+            city = cityName
+        } else {
+            city = ""
+        }
+
+        if let stateString = data["state"] as? String{
+            state = stateString
+        } else {
+            state = ""
+        }
+        
+        if let zip = data["zip"] as? String{
+            zipCode = zip
+        } else {
+            zipCode = ""
+        }
     }
     
     public init(streetName:String, streetNumber:String, city:String, state:String, zipCode:String) {

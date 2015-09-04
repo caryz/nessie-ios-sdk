@@ -196,6 +196,19 @@ public struct PurchaseResult {
                 }
             }
             
+            if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Dictionary<String,AnyObject> {
+                dataArray = nil
+                
+                if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                    dataArray = []
+                    dataItem = nil
+                    for transfer in results {
+                        dataArray?.append(Transaction(data: transfer as! Dictionary<String, AnyObject>))
+                    }
+                    return
+                }
+            }
+            
             dataItem = Transaction(data: parsedObject)
         }
         
@@ -221,5 +234,34 @@ public struct PurchaseResult {
             NSLog("No array of data items found. If you were intending to get one single item, try getPurchase()");
         }
         return dataArray
+    }
+}
+
+public class Purchase {
+    public let status:String?
+    public let medium:TransactionMedium
+    public let payeeId:String?
+    public let amount:Int
+    public let type:String
+    public var transactionDate:NSDate? = nil
+    public let description:String
+    public let purchaseId:String
+    
+    internal init(data:Dictionary<String,AnyObject>) {
+        self.status = data["status"] as? String
+        self.medium = TransactionMedium(rawValue:data["medium"] as! String)!
+        self.payeeId = data["payee_id"] as? String
+        self.amount = data["amount"] as! Int
+        self.type = data["type"] as! String
+        let transactionDateString = data["transaction_date"] as? String
+        if let str = transactionDateString {
+            if let date = dateFormatter.dateFromString(str) {
+                self.transactionDate = date }
+            else {
+                self.transactionDate = NSDate()
+            }
+        }
+        self.description = data["description"] as! String
+        self.purchaseId = data["_id"] as! String
     }
 }

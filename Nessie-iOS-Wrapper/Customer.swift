@@ -155,6 +155,15 @@ public struct CustomerResult {
                 }
             }
             
+            if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                dataArray = []
+                dataItem = nil
+                for transfer in results {
+                    dataArray?.append(Customer(data: transfer as! Dictionary<String, AnyObject>))
+                }
+                return
+            }
+
             dataItem = Customer(data: parsedObject)
         }
         

@@ -25,6 +25,6 @@ class ViewController: UIViewController {
         //var test9 = WithdrawalTests()
         //var test7 = MerchantTests()
         //var test7 = TransactionTests()
-        //var test9 = EnterpriseTests()
+        var test9 = EnterpriseTests()
     }
 }

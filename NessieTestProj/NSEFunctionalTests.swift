@@ -955,7 +955,9 @@ class EnterpriseTests {
             var accounts = result.getAllAccounts()
             var bills = 0
             for tmp in accounts! {
-                bills += tmp.billIds!.count
+                if (tmp.billIds != nil) {
+                    bills += tmp.billIds!.count
+                }
             }
             EnterpriseAccountRequest(accountId: accounts![0].accountId)?.send({(result:AccountResult) in
                 var account = result.getAccount()
@@ -980,13 +982,38 @@ class EnterpriseTests {
             })
         })
         
-        EnterpriseTransactionRequest()?.send({(result:TransactionResult) in
-            var transactions = result.getAllTransactions()
-            EnterpriseTransactionRequest(transactionId: transactions![0].transactionId)?.send({(result:TransactionResult) in
-                var transaction = result.getTransaction()
+        EnterpriseTransferRequest()?.send({(result:TransferResult) in
+            var transfers = result.getAllTransfers()
+            print("\(transfers)\n")
+            EnterpriseTransferRequest(transactionId: transfers![0].transactionId)?.send({(result:TransferResult) in
+                var transfer = result.getTransfer()
+                print("\(transfer)\n")
             })
         })
-        
+        EnterpriseDepositRequest()?.send({(result:DepositResult) in
+            var deposits = result.getAllDeposits()
+            print("\(deposits)\n")
+            EnterpriseDepositRequest(transactionId: deposits![0].transactionId)?.send({(result:DepositResult) in
+                var deposit = result.getDeposit()
+                print("\(deposit)\n")
+            })
+        })
+        EnterpriseWithdrawalRequest()?.send({(result:WithdrawalResult) in
+            var withdrawals = result.getAllWithdrawals()
+            print("\(withdrawals)\n")
+            EnterpriseWithdrawalRequest(transactionId: withdrawals![0].transactionId)?.send({(result:WithdrawalResult) in
+                var withdrawal = result.getWithdrawal()
+                print("\(withdrawal)\n")
+            })
+        })
+        EnterpriseMerchantRequest()?.send({(result:MerchantResult) in
+            var merchants = result.getAllMerchants()
+            print("\(merchants)\n")
+            EnterpriseMerchantRequest(merchantId: merchants![0].merchantId)?.send({(result:MerchantResult) in
+                var merchant = result.getMerchant()
+                print("\(merchant)\n")
+            })
+        })
     }
 }
 

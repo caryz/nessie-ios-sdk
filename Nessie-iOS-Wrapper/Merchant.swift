@@ -165,7 +165,7 @@ public struct MerchantResult
 {
     private var dataItem:Merchant?
     private var dataArray:Array<Merchant>?
-    private init(data:NSData) {
+    internal init(data:NSData) {
         var parseError: NSError?
        
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Array<Dictionary<String,AnyObject>> {
@@ -188,6 +188,15 @@ public struct MerchantResult
                 } else {
                     return
                 }
+            }
+            
+            if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                dataArray = []
+                dataItem = nil
+                for transfer in results {
+                    dataArray?.append(Merchant(data: transfer as! Dictionary<String, AnyObject>))
+                }
+                return
             }
             
             if let MerchantsDict = results["data"] as? [Dictionary<String, AnyObject>] {

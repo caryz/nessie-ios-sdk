@@ -157,7 +157,7 @@ public class WithdrawalRequest {
 public struct WithdrawalResult {
     private var dataItem:Transaction?
     private var dataArray:Array<Transaction>?
-    private init(data:NSData) {
+    internal init(data:NSData) {
         var parseError: NSError?
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Array<Dictionary<String,AnyObject>> {
             
@@ -177,6 +177,19 @@ public struct WithdrawalResult {
                     NSLog("Reasons:\(reason.description)")
                     return
                 } else {
+                    return
+                }
+            }
+            
+            if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Dictionary<String,AnyObject> {
+                dataArray = nil
+                
+                if let results:Array<AnyObject> = parsedObject["results"] as? Array<AnyObject> {
+                    dataArray = []
+                    dataItem = nil
+                    for transfer in results {
+                        dataArray?.append(Transaction(data: transfer as! Dictionary<String, AnyObject>))
+                    }
                     return
                 }
             }
@@ -207,3 +220,33 @@ public struct WithdrawalResult {
         return dataArray
     }
 }
+
+public class Withdrawal {
+    public let status:String?
+    public let medium:TransactionMedium
+    public let payerId:String?
+    public let amount:Int
+    public let type:String
+    public var transactionDate:NSDate? = nil
+    public let description:String
+    public let withdrawalId:String
+    
+    internal init(data:Dictionary<String,AnyObject>) {
+        self.status = data["status"] as? String
+        self.medium = TransactionMedium(rawValue:data["medium"] as! String)!
+        self.payerId = data["payer_id"] as? String
+        self.amount = data["amount"] as! Int
+        self.type = data["type"] as! String
+        let transactionDateString = data["transaction_date"] as? String
+        if let str = transactionDateString {
+            if let date = dateFormatter.dateFromString(str) {
+                self.transactionDate = date }
+            else {
+                self.transactionDate = NSDate()
+            }
+        }
+        self.description = data["description"] as! String
+        self.withdrawalId = data["_id"] as! String
+    }
+}
+
