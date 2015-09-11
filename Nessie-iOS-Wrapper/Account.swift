@@ -198,6 +198,7 @@ public class Account {
     public var billIds:Array<String>? = nil
     public let customerId:String
     public let accountId:String
+    public let nickname:String
     
     internal init(data:Dictionary<String,AnyObject>) {
         self.accountType = data["type"] as! String
@@ -206,5 +207,6 @@ public class Account {
         self.billIds = data["bill_ids"] as? Array<String>
         self.customerId = data["customer_id"] as! String
         self.accountId = data["_id"] as! String
+        self.nickname = data["nickname"] as! String
     }
 }

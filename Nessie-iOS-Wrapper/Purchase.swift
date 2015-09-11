@@ -170,8 +170,8 @@ public class PurchaseRequest {
 
 
 public struct PurchaseResult {
-    private var dataItem:Transaction?
-    private var dataArray:Array<Transaction>?
+    private var dataItem:Purchase?
+    private var dataArray:Array<Purchase>?
     private init(data:NSData) {
         var parseError: NSError?
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Array<Dictionary<String,AnyObject>> {
@@ -179,7 +179,7 @@ public struct PurchaseResult {
             dataArray = []
             dataItem = nil
             for purchase in parsedObject {
-                dataArray?.append(Transaction(data: purchase))
+                dataArray?.append(Purchase(data: purchase))
             }
         }
         if let parsedObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.allZeros, error:&parseError) as? Dictionary<String,AnyObject> {
@@ -203,13 +203,13 @@ public struct PurchaseResult {
                     dataArray = []
                     dataItem = nil
                     for transfer in results {
-                        dataArray?.append(Transaction(data: transfer as! Dictionary<String, AnyObject>))
+                        dataArray?.append(Purchase(data: transfer as! Dictionary<String, AnyObject>))
                     }
                     return
                 }
             }
             
-            dataItem = Transaction(data: parsedObject)
+            dataItem = Purchase(data: parsedObject)
         }
         
         if (dataItem == nil && dataArray == nil) {
@@ -222,14 +222,14 @@ public struct PurchaseResult {
         }
     }
     
-    public func getPurchase() -> Transaction? {
+    public func getPurchase() -> Purchase? {
         if (dataItem == nil) {
             NSLog("No single data item found. If you were intending to get multiple items, try getAllPurchases()");
         }
         return dataItem
     }
     
-    public func getAllPurchases() -> Array<Transaction>? {
+    public func getAllPurchases() -> Array<Purchase>? {
         if (dataArray == nil) {
             NSLog("No array of data items found. If you were intending to get one single item, try getPurchase()");
         }
@@ -238,19 +238,20 @@ public struct PurchaseResult {
 }
 
 public class Purchase {
-    public let status:String?
-    public let medium:TransactionMedium
-    public let payeeId:String?
-    public let amount:Int
-    public let type:String
-    public var transactionDate:NSDate? = nil
-    public let description:String
-    public let purchaseId:String
+    public let status:String!
+    public let medium:TransactionMedium!
+    public let payerId:String!
+    public let amount:Int!
+    public let type:String!
+    public var transactionDate:NSDate!
+    public let description:String!
+    public let purchaseId:String!
+    public let merchantId:String!
     
     internal init(data:Dictionary<String,AnyObject>) {
         self.status = data["status"] as? String
         self.medium = TransactionMedium(rawValue:data["medium"] as! String)!
-        self.payeeId = data["payee_id"] as? String
+        self.payerId = data["payer_id"] as? String
         self.amount = data["amount"] as! Int
         self.type = data["type"] as! String
         let transactionDateString = data["transaction_date"] as? String
@@ -263,5 +264,6 @@ public class Purchase {
         }
         self.description = data["description"] as! String
         self.purchaseId = data["_id"] as! String
+        self.merchantId = data["merchant_id"] as! String
     }
 }

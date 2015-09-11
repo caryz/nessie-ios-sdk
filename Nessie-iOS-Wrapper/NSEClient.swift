@@ -14,7 +14,7 @@ public enum HTTPType : String {
     case PUT = "PUT"
     case DELETE = "DELETE"
 }
-internal let baseString = "http://api.nessiebanking.com"
+internal let baseString = "http://api.reimaginebanking.com"
 internal var dateFormatter = NSDateFormatter()
 
 public class NSEClient {
