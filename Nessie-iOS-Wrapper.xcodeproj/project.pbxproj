@@ -119,7 +119,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B834EB0F1AE5BB5000379E11 /* NessieTestProj */ = {
+		B834EB0F1AE5BB5000379E11 /* Nessie-iOS-WrapperExample */ = {
 			isa = PBXGroup;
 			children = (
 				B834EB121AE5BB5000379E11 /* AppDelegate.swift */,
@@ -130,6 +130,7 @@
 				B834EB101AE5BB5000379E11 /* Supporting Files */,
 				B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */,
 			);
+			name = "Nessie-iOS-WrapperExample";
 			path = NessieTestProj;
 			sourceTree = "<group>";
 		};
@@ -163,7 +164,7 @@
 			children = (
 				B8C549F31ACEE595002206AC /* Nessie-iOS-Wrapper */,
 				B8C54A001ACEE595002206AC /* Nessie-iOS-WrapperTests */,
-				B834EB0F1AE5BB5000379E11 /* NessieTestProj */,
+				B834EB0F1AE5BB5000379E11 /* Nessie-iOS-WrapperExample */,
 				B834EB251AE5BB5000379E11 /* NessieTestProjTests */,
 				B8C549F21ACEE595002206AC /* Products */,
 			);
