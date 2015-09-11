@@ -278,7 +278,7 @@ class CustomerTests {
         })?.send({(result:CustomerResult) in
             var customers = result.getAllCustomers()
             print("Customers fetched:\(customers)\n")
-            var customerToGet = customers![3]
+            var customerToGet = customers![0]
             var customerToGetFromAccount = customers![customers!.count-1]
             /*********************
             Get 1 customer
