@@ -74,7 +74,7 @@
 		B85401A31B0A895400031001 /* Deposit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deposit.swift; sourceTree = "<group>"; };
 		B85401A51B0AE49500031001 /* Withdrawal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Withdrawal.swift; sourceTree = "<group>"; };
 		B86E4A7C1B0BD3C00076A6D0 /* EnterpriseRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterpriseRequests.swift; sourceTree = "<group>"; };
-		B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSEFunctionalTests.swift; sourceTree = "<group>"; };
+		B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NSEFunctionalTests.swift; path = ../NessieTestProj/NSEFunctionalTests.swift; sourceTree = "<group>"; };
 		B8C549F11ACEE595002206AC /* NessieFmwk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NessieFmwk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8C549F51ACEE595002206AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B8C549F61ACEE595002206AC /* Nessie-iOS-Wrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nessie-iOS-Wrapper.h"; sourceTree = "<group>"; };
@@ -128,7 +128,6 @@
 				B834EB191AE5BB5000379E11 /* Images.xcassets */,
 				B834EB1B1AE5BB5000379E11 /* LaunchScreen.xib */,
 				B834EB101AE5BB5000379E11 /* Supporting Files */,
-				B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */,
 			);
 			name = "Nessie-iOS-WrapperExample";
 			path = NessieTestProj;
@@ -184,6 +183,7 @@
 		B8C549F31ACEE595002206AC /* Nessie-iOS-Wrapper */ = {
 			isa = PBXGroup;
 			children = (
+				B86E4A7E1B0BD6EF0076A6D0 /* NSEFunctionalTests.swift */,
 				B8C549F61ACEE595002206AC /* Nessie-iOS-Wrapper.h */,
 				B8C549F41ACEE595002206AC /* Supporting Files */,
 				B8C54A0D1ACEE5A6002206AC /* NSEClient.swift */,
